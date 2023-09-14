@@ -5,7 +5,8 @@ import java.nio.file.Paths;
 
 class ChatGPTBuilder implements ChatGPT.Builder {
 
-  private String apiKey = "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";
+  private String apiKey;
+
   private int conversationSize = Integer.MAX_VALUE;
   private Path dataPath = Paths.get(System.getProperty("user.home"), ".chatgpt", "data");
 

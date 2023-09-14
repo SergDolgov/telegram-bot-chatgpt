@@ -6,16 +6,17 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.IOException;
 
-public class Main {
-    public static void main(String[] args) throws TelegramApiException {
+public class TelegramBotApp {
+
+    public static void main(String[] args) {
+
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new TelegramBot());
+            telegramBotsApi.registerBot(new TelegramBotChatGPT());
 
         } catch (TelegramApiException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
+
 }

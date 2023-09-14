@@ -8,15 +8,17 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 public class TelegramBotChatGPT extends TelegramLongPollingBot {
+    private String botUsername = "ChatGPTLiteVersionBot";
+    private String botToken;
     final ChatGPT chatGPT = ChatGPT
             .builder()
-            .dataPath(Files.createTempDirectory("chatgpt")) // Persist the chat history to a data path
+            //.dataPath(Files.createTempDirectory("chatgpt")) // Persist the chat history to a data path
             .build();
     final Conversation conversation = chatGPT.newConversation();
-    public TelegramBotChatGPT() throws IOException {
+    public TelegramBotChatGPT() {
+        botToken = System.getenv("BOT_TOKEN");
     }
 
     @Override
@@ -37,15 +39,15 @@ public class TelegramBotChatGPT extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             finally {
                 try {
                     conversation.save();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -53,14 +55,12 @@ public class TelegramBotChatGPT extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "ChatGPTLiteVersionBot";
-        //return "BanderogusSergGoItBot";
+        return botUsername;
     }
 
     @Override
     public String getBotToken() {
-        return "6617616396:AAHDJXbCTIn_GI9s1VkG3KlXYmKgFcxdjhY";
-        //return "6166506459:AAGlClhbNtLSl_VJ6dY0x14wbIRMQfXEVTM";
+        return botToken;
     }
 
 }
